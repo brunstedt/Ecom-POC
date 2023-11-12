@@ -18,13 +18,16 @@ export async function getCart() {
             'Content-Type': 'application/json',
         },
         cache: 'no-store',
+        next: {
+            tags: ['cart']
+        }
     })
 
     return await response.json()
 }
 
 export async function createCartSession() {
-    const response = await fetch(`${process.env.BASE_URL}/api/cart/session`, {
+    const response = await fetch(`${process.env.BASE_URL}/api/cart-session`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

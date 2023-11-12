@@ -3,6 +3,7 @@ export async function POST(request: Request) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'x-api-key': `${process.env.BRINK_TOKEN}`
         },
         body: JSON.stringify({
             storeGroupId: process.env.BRINK_STORE_GROUP_ID,
@@ -11,9 +12,10 @@ export async function POST(request: Request) {
         }),
     })
 
+    const {status} = response
+    
     if(response.status !== 200) {
-        return new Response(JSON.stringify({error: `Error creating cart session (${response.status})`}), {status: response.status})
+        return new Response(JSON.stringify({error: `Error creating cart session (${response.status})`}), {status})
     }
-
-    return new Response(JSON.stringify(response), {status: response.status})
+    return new Response(JSON.stringify(response), {status})
 }

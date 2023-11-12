@@ -5,7 +5,8 @@ import {revalidateTag} from 'next/cache'
 
 export async function addToCartAction({productId}: {productId: string}) {
     try {
-        addToCart({productId})
+        await addToCart({productId})
+        revalidateTag('cart')
     } catch(error) {
         return `There was an error adding the product to the cart ${error}`
     }
