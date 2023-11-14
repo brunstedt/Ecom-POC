@@ -22,7 +22,8 @@ export default function MiniCart({cart}: MiniCartProps) {
 
     return (
         <>
-            <button onClick={() => setIsOpen(true)} className="text-white flex gap-2 text-xl tracking-wider">
+            <button onClick={() => setIsOpen(true)} className="text-white flex items-center gap-3 text-xl tracking-wider border-white border rounded-full px-4 py-1 hover:bg-white hover:bg-opacity-20">
+                <Icon name="shopping-cart" size='small' />
                 Cart
             </button>
 
