@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthOptions, getServerSession} from 'next-auth'
+import NextAuth, { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 export const authOptions: NextAuthOptions = {
@@ -23,8 +23,6 @@ export const authOptions: NextAuthOptions = {
                 if(!credentials || !credentials.grant_type) {
                     throw new Error('Missing credentials')
                 }
-
-                const session = await getServerSession(authOptions)
 
                 const qs = new URLSearchParams()
                 qs.set('grant_type', credentials.grant_type)
