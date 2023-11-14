@@ -6,10 +6,10 @@ import { usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
 import { useSession } from 'next-auth/react'
 import MiniCart from '../miniCart/MiniCart'
-import { Cart } from '@/types/cart'
+import { CartSessionsResponse } from '@/types/cart'
 
 type HeaderProps = {
-    cart?: Cart
+    cart?: CartSessionsResponse
 }
 
 export default function Header(props: HeaderProps) {

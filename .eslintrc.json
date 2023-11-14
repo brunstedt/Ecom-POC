@@ -4,6 +4,6 @@
     "quotes": ["error", "single"],
     "semi": ["error", "never"],
     "no-console": "off",
-    "indent": 2
+    "indent": 1
   }
 }

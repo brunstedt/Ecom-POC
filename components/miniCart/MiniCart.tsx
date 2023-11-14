@@ -1,17 +1,17 @@
 'use client'
-import { Cart } from '@/types/cart'
+import { CartSessionsResponse } from '@/types/cart'
 import Drawer from '@/components/drawer/Drawer'
 import { useState } from 'react'
 import Icon from '../icon/Icon'
 import MiniCartItem from './MiniCartItem'
 
 type MiniCartProps = {
-    cart?: Cart
+    cart?: CartSessionsResponse
 }
-export default function MiniCart(props: MiniCartProps) {
+export default function MiniCart({cart}: MiniCartProps) {
     const [isOpen, setIsOpen] = useState(false)
 
-    if(!props.cart) {
+    if(!cart) {
         return null
     }
 
@@ -22,9 +22,10 @@ export default function MiniCart(props: MiniCartProps) {
             </button>
 
             <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)} title="My reserveation" backDrop>
-                {props.cart?.items.length > 0 ? 
-                    <>{props.cart.items.map(item => <MiniCartItem key={item.id} {...item} />)}</> : 
-                    <div className="flex justify-center py-24 text-xl text-gray-700">No reservations made</div>}
+                {cart.cart.items.length > 0 ? 
+                    <div className="">{cart.cart.items.map(item => <MiniCartItem key={item.id} {...item} />)}</div> : 
+                    <div className="flex justify-center py-24 text-xl text-gray-700">No reservations made</div>
+                }
             </Drawer>
         </>
     )
