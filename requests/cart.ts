@@ -36,7 +36,6 @@ export async function createCartSession(session: any): Promise<CartSession> {
     })
 
     const cart = await response.json()
-    console.log('fetching cart')
 
     return cart
 }
