@@ -20,8 +20,9 @@ export default function Login({searchParams}: PageProps) {
     }
     return (
         <div className="w-full pt-24">
-            <div className="bg-white bg-opacity-70 p-8 md:w-1/2 mx-auto rounded-md shadow-2xl">
+            <div className="bg-white bg-opacity-90 p-8 md:w-1/2 mx-auto rounded-md shadow-2xl">
                 <div className="mb-4">(No credentials needed)</div>
+                {/* <form onSubmit={handleSubmit} className="flex flex-col gap-4"> */}
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                     <input type="hidden" name="grant_type" value="client_credentials" />
                     <div className="flex flex-col gap-1">

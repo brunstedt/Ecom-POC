@@ -23,7 +23,6 @@ export const authOptions: NextAuthOptions = {
                 if(!credentials || !credentials.grant_type) {
                     throw new Error('Missing credentials')
                 }
-
                 const qs = new URLSearchParams()
                 qs.set('grant_type', credentials.grant_type)
                 qs.set('client_id', process.env.BRINK_CLIENT_ID ?? '')
@@ -36,7 +35,7 @@ export const authOptions: NextAuthOptions = {
                     },
                     body: qs.toString()
                 })
-
+                
                 return await res.json()
             }
         })
@@ -46,9 +45,8 @@ export const authOptions: NextAuthOptions = {
         async jwt({token, user}) {
             return {...token, ...user}
         },
-        async session({session, token}) {
-            session = token as any
-            return session
+        async session({session, token}) {            
+            return {...token, ...session} as any
         }
     }
 

@@ -2,12 +2,22 @@ import { addToCartAction } from '@/app/actions/cart'
 import localeCurrency from '@/utils/currency'
 import Image from 'next/image'
 import { getProduct } from '@/requests/products'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { redirect } from 'next/navigation'
 
 type BookItemProps = {
     params: { id: string }
 }
 
+
 export default async function BookItem({params}: BookItemProps) {
+    const sessionData = await getServerSession(authOptions)
+    
+    if(!sessionData) {
+        redirect('/login?redirect=/booking')
+    }
+    
     const id = params.id[0]
     const product = await getProduct(id)
 

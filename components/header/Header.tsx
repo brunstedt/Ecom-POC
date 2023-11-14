@@ -5,8 +5,14 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
 import { useSession } from 'next-auth/react'
+import MiniCart from '../miniCart/MiniCart'
+import { CartSession } from '@/types/cart'
 
-export default function Header() {
+type HeaderProps = {
+    cart?: Pick<CartSession, 'cart'>
+}
+
+export default function Header(props: HeaderProps) {
     const session = useSession()
     const pathName = usePathname()
 
@@ -39,8 +45,15 @@ export default function Header() {
                     ))}
                 </nav>
 
-                {isAuthenticated ? <button onClick={() => signOut()} className="text-white text-xl tracking-wider">Logout</button> : <Link href="/login" className={twMerge('text-white text-xl tracking-wider', isActivePath('/login') && 'border-b border-b-white')}>Log in</Link>}
-                
+                <div>
+                    {isAuthenticated ? 
+                        <div className="flex gap-6">
+                            <MiniCart cart={props.cart} />
+                            <button onClick={() => signOut()} className="text-white text-xl tracking-wider">Logout</button>
+                        </div>
+                        : <Link href="/login" className={twMerge('text-white text-xl tracking-wider', isActivePath('/login') && 'border-b border-b-white')}>Log in</Link>
+                    }
+                </div>
             </div> 
         </header>
     )
