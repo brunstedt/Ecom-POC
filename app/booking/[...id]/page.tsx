@@ -41,7 +41,7 @@ export default async function BookItem({params}: BookItemProps) {
                         {hasDiscount ? (
                             <div>
                                 <div className="line-through text-sm">{localeCurrency({amount: product.basePriceAmount})}</div>
-                                <div className="font-bold text-xl text-red-400">{localeCurrency({amount: product.discountAmount})}</div>
+                                <div className="font-bold text-xl text-red-500">{localeCurrency({amount: product.discountAmount})}</div>
                             </div>
                         ) : <div className="font-bold text-xl">{localeCurrency({amount: product.salePriceAmount})}</div>}
                         <form action={addToCartActionWithId}>
