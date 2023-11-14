@@ -1,11 +1,10 @@
-import { createCartSession } from '@/requests/cart'
 import Header from './Header'
+// import { getServerSession } from 'next-auth'
+// import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 
 export default async function HeaderWrapper() {
-
-    // ToDo - create session and pass cart to header
-    // const cartSession = await createCartSession()
-    // console.log('cartSession', cartSession)
+    // const sessionData = await getServerSession(authOptions)
+    // console.log('sessionData', sessionData)
 
     return (<Header />)
 }

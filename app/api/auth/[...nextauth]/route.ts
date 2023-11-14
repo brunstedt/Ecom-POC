@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthOptions} from 'next-auth'
+import NextAuth, { NextAuthOptions, getServerSession} from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 export const authOptions: NextAuthOptions = {
@@ -14,7 +14,6 @@ export const authOptions: NextAuthOptions = {
         signOut: '/logout',
         error: '/login',
     },
-    debug: true,
     providers: [
         CredentialsProvider({
             credentials: {
@@ -25,28 +24,35 @@ export const authOptions: NextAuthOptions = {
                     throw new Error('Missing credentials')
                 }
 
+                const session = await getServerSession(authOptions)
+
+                const qs = new URLSearchParams()
+                qs.set('grant_type', credentials.grant_type)
+                qs.set('client_id', process.env.BRINK_CLIENT_ID ?? '')
+                qs.set('client_secret', process.env.BRINK_CLIENT_SECRET ?? '')
+
                 const res = await fetch(`${process.env.BRINK_OAUTH_URL}`, {
                     method: 'POST',
                     headers: {
-                        // 'Content-Type': 'application/x-www-form-urlencoded',
-                        Authorization: `Bearer ${process.env.BRINK_TOKEN}`,
-                        'x-api-key': `${process.env.BRINK_API_KEY}`
+                        'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: new URLSearchParams({
-                        grant_type: credentials.grant_type
-                    })
+                    body: qs.toString()
                 })
-                console.log({
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    Authorization: `Bearer ${process.env.BRINK_TOKEN}`,
-                    // 'x-api-key': `${process.env.BRINK_API_KEY}`
-                })
-                const r = await res.json()
-                console.log(r)
+
                 return await res.json()
             }
         })
-    ]
+    ],
+
+    callbacks: {
+        async jwt({token, user}) {
+            return {...token, ...user}
+        },
+        async session({session, token}) {
+            session = token as any
+            return session
+        }
+    }
 
 }
 
