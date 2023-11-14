@@ -3,10 +3,15 @@ import { getProducts } from '@/requests/products'
 import { Product } from '@/types/product'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../api/auth/[...nextauth]/route'
+import { redirect } from 'next/navigation'
 
 export default async function Booking() {
     const sessionData = await getServerSession(authOptions)
-    console.log('sessionData', sessionData)
+
+    if(!sessionData) {
+        redirect('/login?redirect=/booking')
+    }
+
     const products: Product[] = await getProducts()
 
     return (

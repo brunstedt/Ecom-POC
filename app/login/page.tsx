@@ -1,7 +1,11 @@
 'use client'
+import { PageProps } from '@/types/page'
 import { signIn } from 'next-auth/react'
 
-export default function Login() {
+export default function Login({searchParams}: PageProps) {
+
+    const redirect = `${searchParams.redirect}` || '/'
+
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
@@ -11,7 +15,7 @@ export default function Login() {
         
         signIn('credentials', {
             ...formJson,
-            callbackUrl: '/',
+            callbackUrl: redirect,
         })
     }
     return (
