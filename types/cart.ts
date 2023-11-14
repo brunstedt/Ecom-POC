@@ -24,3 +24,36 @@ export type CartItem = {
     totalPriceAmount: number,
     totalTaxAmount: number
 }
+
+export type CartSession = {
+    token: string,
+    cart: {
+        id: string,
+        sessionId: string,
+        storeGroupId: string,
+        countryCode: string,
+        currencyCode: string,
+        languageCode: string,
+        isTaxIncludedInPrice: boolean,
+        discountCodes: any[],
+        discountRules: any[],
+        created: string,
+        updated: string,
+        discountAmount: number,
+        revision: number,
+        items: any[],
+        gifts: any[],
+        totals: {
+            subTotal: number,
+            taxTotal: number,
+            discountTotal: number,
+            grandTotal: number
+        }
+    },
+    capabilities: {
+        paymentProviders: any[],
+        shippingProviders: any[],
+        giftCardProviders: any[]
+    },
+    locked: boolean
+}

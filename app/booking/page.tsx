@@ -1,8 +1,12 @@
 import ProductCard from '@/components/productCard/ProductCard'
 import { getProducts } from '@/requests/products'
 import { Product } from '@/types/product'
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '../api/auth/[...nextauth]/route'
 
 export default async function Booking() {
+    const sessionData = await getServerSession(authOptions)
+    console.log('sessionData', sessionData)
     const products: Product[] = await getProducts()
 
     return (

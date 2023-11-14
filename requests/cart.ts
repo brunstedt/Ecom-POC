@@ -1,3 +1,5 @@
+import type { CartSession } from '@/types/cart'
+
 export async function addToCart({productId}: {productId: string}) {    
     const response = await fetch(`${process.env.BASE_URL}/api/cart`, {
         method: 'PUT',
@@ -29,10 +31,10 @@ export async function getCart() {
 export async function createCartSession() {
     const response = await fetch(`${process.env.BASE_URL}/api/cart-session`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        cache: 'no-store',
     })
 
-    return await response.json()
+    const cart: CartSession = await response.json()
+
+    return cart
 }

@@ -1,5 +1,5 @@
 export async function POST(request: Request) {
-    const response = await fetch(`${process.env.BRINK_SHOPPER_URL}/sessions/items`, {
+    const response = await fetch(`${process.env.BRINK_SHOPPER_URL}/shopper/sessions/items`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
     const { productId } = await request.json()
-    const response = await fetch(`${process.env.BRINK_SHOPPER_URL}/sessions/items/${productId}`, {
+    const response = await fetch(`${process.env.BRINK_SHOPPER_URL}/shopper/sessions/items/${productId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
