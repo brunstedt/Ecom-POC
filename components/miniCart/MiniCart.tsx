@@ -18,17 +18,15 @@ export default function MiniCart({cart}: MiniCartProps) {
         return null
     }
 
-    console.log(cart)
-
     return (
         <>
-            <button onClick={() => setIsOpen(true)} className="text-white flex items-center gap-3 text-xl tracking-wider border-white border rounded-full px-4 py-1 hover:bg-white hover:bg-opacity-20">
+            <button onClick={() => setIsOpen(true)} className="text-white flex items-center gap-3 text-xl tracking-wider border-white border rounded-full px-4 py-1 md:-mb-2 md:mt-0 -mt-1 hover:bg-white hover:bg-opacity-20">
                 <Icon name="shopping-cart" size='small' />
                 Cart
             </button>
 
             <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)} title="My reserveation" backDrop>
-                <div className="flex grow flex-col overflow-y-auto pt-4">
+                <div className="flex grow flex-col overflow-y-auto">
                     {cart.cart.items.length > 0 ? 
                         <div className="">{cart.cart.items.map(item => <MiniCartItem key={item.id} {...item} />)}</div> : 
                         <div className="flex justify-center py-24 text-xl text-gray-700">No reservations made</div>
