@@ -8,7 +8,6 @@ export type BrinkHeaders = {
 
 export function authHeaders(session: Session): BrinkHeaders & HeadersInit | undefined {
     if(!session) { return }
-    
     // @ts-ignore The token_type and access_token are not defined in the Session type
     const authorization = `Bearer ${session.cartToken}`
     return ({

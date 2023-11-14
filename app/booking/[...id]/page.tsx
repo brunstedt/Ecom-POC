@@ -27,8 +27,7 @@ export default async function BookItem({params}: BookItemProps) {
 
     const hasDiscount = product.discountAmount > 0
 
-    const addToCartActionWithId = addToCartAction.bind(null, {productId: product.id})
-
+    const addToCartActionWithId = addToCartAction.bind(null, {productId: product.id, quantity: 1, productVariantId: product.productVariantId})
     return (
         <div className="flex flex-col gap-2 bg-gradient-to-t from-[rgba(255,255,255,.75)] via-white to-white p-6 rounded-md">
             <div className="flex flex-col md:flex-row gap-4 md:gap-0">

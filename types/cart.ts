@@ -27,33 +27,35 @@ export type CartItem = {
 
 export type CartSession = {
     token: string,
-    cart: {
-        id: string,
-        sessionId: string,
-        storeGroupId: string,
-        countryCode: string,
-        currencyCode: string,
-        languageCode: string,
-        isTaxIncludedInPrice: boolean,
-        discountCodes: any[],
-        discountRules: any[],
-        created: string,
-        updated: string,
-        discountAmount: number,
-        revision: number,
-        items: any[],
-        gifts: any[],
-        totals: {
-            subTotal: number,
-            taxTotal: number,
-            discountTotal: number,
-            grandTotal: number
-        }
-    },
+    cart: Cart,
     capabilities: {
         paymentProviders: any[],
         shippingProviders: any[],
         giftCardProviders: any[]
     },
     locked: boolean
+}
+
+export type Cart = {
+    id: string,
+    sessionId: string,
+    storeGroupId: string,
+    countryCode: string,
+    currencyCode: string,
+    languageCode: string,
+    isTaxIncludedInPrice: boolean,
+    discountCodes: any[],
+    discountRules: any[],
+    created: string,
+    updated: string,
+    discountAmount: number,
+    revision: number,
+    items: CartItem[],
+    gifts: any[],
+    totals: {
+        subTotal: number,
+        taxTotal: number,
+        discountTotal: number,
+        grandTotal: number
+    }
 }

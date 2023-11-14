@@ -3,23 +3,24 @@ import {authHeaders} from './helpers'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 
-export async function addToCart({productId}: {productId: string}) {
+export async function addToCart({productId, quantity, productVariantId}: {productId: string, quantity: number, productVariantId: string}) {
     const session = await getServerSession(authOptions)
     if(!session) { return }
 
-    const response = await fetch(`${process.env.BASE_URL}/api/cart`, {
-        method: 'PUT',
+    const response = await fetch(`${process.env.BRINK_SHOPPER_URL}/shopper/sessions/items`, {
+        method: 'POST',
         cache: 'no-store',
-        body: JSON.stringify({productId}),
+        headers: {...authHeaders(session)},
+        body: JSON.stringify({
+            quantity,
+            productVariantId
+        }),
     })
-
+    
     return await response.json()
 }
 
-export async function createCartSession(): Promise<Pick<CartSession, 'cart'> | undefined> {
-    const session = await getServerSession(authOptions)
-    if(!session) { return }
-
+export async function createCartSession(session: any): Promise<CartSession> {
     const response = await fetch(`${process.env.BRINK_SHOPPER_URL}/shopper/sessions/start`, {
         method: 'POST',
         cache: 'no-store',
@@ -34,7 +35,8 @@ export async function createCartSession(): Promise<Pick<CartSession, 'cart'> | u
         }
     })
 
-    const {cart} = await response.json()
+    const cart = await response.json()
+    console.log('fetching cart')
 
     return cart
 }

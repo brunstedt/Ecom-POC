@@ -6,10 +6,10 @@ import { usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
 import { useSession } from 'next-auth/react'
 import MiniCart from '../miniCart/MiniCart'
-import { CartSession } from '@/types/cart'
+import { Cart } from '@/types/cart'
 
 type HeaderProps = {
-    cart?: Pick<CartSession, 'cart'>
+    cart?: Cart
 }
 
 export default function Header(props: HeaderProps) {
@@ -47,7 +47,7 @@ export default function Header(props: HeaderProps) {
 
                 <div>
                     {isAuthenticated ? 
-                        <div className="flex gap-6">
+                        <div className="flex gap-6 items-start">
                             <MiniCart cart={props.cart} />
                             <button onClick={() => signOut()} className="text-white text-xl tracking-wider">Logout</button>
                         </div>

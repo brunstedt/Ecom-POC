@@ -1,3 +1,4 @@
+import { createCartSession } from '@/requests/cart'
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
@@ -35,7 +36,10 @@ export const authOptions: NextAuthOptions = {
                     },
                     body: qs.toString()
                 })
-                
+
+                const userSession = await res.json()
+                const cartSession = await createCartSession(userSession)
+                return {...userSession, cartToken: cartSession.token}
                 return await res.json()
             }
         })
@@ -45,7 +49,7 @@ export const authOptions: NextAuthOptions = {
         async jwt({token, user}) {
             return {...token, ...user}
         },
-        async session({session, token}) {            
+        async session({session, token}) {
             return {...token, ...session} as any
         }
     }
