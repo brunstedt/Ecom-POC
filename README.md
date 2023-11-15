@@ -6,16 +6,16 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-Install dependencies (from project root folder):
 ```bash
+#Install dependencies (from project root folder):
 bun install
 ```
 
-Set up environment variabes:
+### Set up environment variabes
 Create a copy of `.env.local.sample` and rename it to `.env.local`
 
-Then, run the development server:
 ```bash
+#Then, run the development server:
 bun dev
 ```
 
@@ -23,13 +23,3 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Brink documentation
 [https://docs.eu-west-1.playground1.brinkcommerce.io/services/](Swagger)
-
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
