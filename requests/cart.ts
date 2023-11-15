@@ -1,5 +1,5 @@
 import type { CartSession, CartSessionsResponse } from '@/types/cart'
-import {authHeaders} from './helpers'
+import {cartHeaders} from './helpers'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 
@@ -10,13 +10,12 @@ export async function addToCart({productId, quantity, productVariantId}: {produc
     const response = await fetch(`${process.env.BRINK_SHOPPER_URL}/shopper/sessions/items`, {
         method: 'POST',
         cache: 'no-store',
-        headers: {...authHeaders(session)},
+        headers: {...cartHeaders(session)},
         body: JSON.stringify({
             quantity,
             productVariantId
         }),
     })
-
     return await response.json()
 }
 
@@ -27,7 +26,7 @@ export async function removeFromCart({productId}: {productId: string}) {
     const response = await fetch(`${process.env.BRINK_SHOPPER_URL}/shopper/sessions/items/${productId}`, {
         method: 'DELETE',
         cache: 'no-store',
-        headers: {...authHeaders(session)},
+        headers: {...cartHeaders(session)},
     })
 
     return await response.json()
@@ -40,7 +39,7 @@ export async function getCart(): Promise<CartSessionsResponse  | undefined> {
     const response = await fetch(`${process.env.BRINK_SHOPPER_URL}/shopper/sessions`, {
         method: 'GET',
         cache: 'no-store',
-        headers: {...authHeaders(session)},
+        headers: {...cartHeaders(session)},
         next: {
             tags: ['cart']
         }
@@ -54,7 +53,7 @@ export async function getCart(): Promise<CartSessionsResponse  | undefined> {
 export async function createCartSession(session: any): Promise<CartSession> {
     const response = await fetch(`${process.env.BRINK_SHOPPER_URL}/shopper/sessions/start`, {
         method: 'POST',
-        headers: {...authHeaders(session)},
+        headers: {...cartHeaders(session)},
         body: JSON.stringify({
             storeGroupId: process.env.BRINK_STORE_GROUP_ID,
             countryCode: process.env.BRINK_COUNTRY_CODE,

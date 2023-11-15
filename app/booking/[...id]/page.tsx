@@ -1,56 +1,65 @@
-import { addToCartAction } from '@/app/actions/cart'
-import localeCurrency from '@/utils/currency'
-import Image from 'next/image'
-import { getProduct } from '@/requests/products'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { getHotel, getRooms } from '@/requests/products'
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '../../api/auth/[...nextauth]/route'
 import { redirect } from 'next/navigation'
+import Tabs from '@/components/tabs/Tabs'
+import { Room } from '@/types/Hotel'
+import RoomPicker from '@/components/roomPicker/RoomPicker'
 
-type BookItemProps = {
+type PageProps = {
     params: { id: string }
 }
 
-
-export default async function BookItem({params}: BookItemProps) {
+export default async function Booking({params}: PageProps) {
     const sessionData = await getServerSession(authOptions)
-    
+
     if(!sessionData) {
         redirect('/login?redirect=/booking')
     }
-    
-    const id = params.id[0]
-    const product = await getProduct(id)
 
-    if (!product) {
-        return <pre>Product not found: {params.id}</pre>
+    const id = params.id[0]
+    const hotel = await getHotel({parentId: id})
+    const rooms = await getRooms({parentId: id})
+
+    function roomTabs(rooms: Room[]) {
+        return rooms.map((room) => ({
+            id: room.id,
+            title: room.displayNames.en,
+            content: <RoomPicker {...room} />
+        }))
     }
 
-    const hasDiscount = product.discountAmount > 0
-
-    const addToCartActionWithId = addToCartAction.bind(null, {productId: product.id, quantity: 1, productVariantId: product.productVariantId})
+    if(!hotel) {
+        return null
+    }
+    
     return (
-        <div className="flex flex-col gap-2 bg-gradient-to-t from-[rgba(255,255,255,.75)] via-white to-white p-6 rounded-md">
-            <div className="flex flex-col md:flex-row gap-4 md:gap-0">
-                <div className="relative block h-44 md:h-64 w-full md:w-1/2">
-                    <Image src={product.imageUrl} fill alt={product.displayName} className="object-contain" />
-                </div>
-                <div className='md:pl-6 w-full md:w-1/2 flex flex-col gap-4 '>
-                    <div className="md:text-3xl text-xl tracking-wider">{product.displayName}</div>
-                    <div className="md:text-lg font-semibold">{product.displayDescription}</div>
-                    <div className="flex gap-8 items-center mt-4">
-                        {hasDiscount ? (
-                            <div>
-                                <div className="line-through text-sm">{localeCurrency({amount: product.basePriceAmount})}</div>
-                                <div className="font-bold text-xl text-red-500">{localeCurrency({amount: product.discountAmount})}</div>
-                            </div>
-                        ) : <div className="font-bold text-xl">{localeCurrency({amount: product.salePriceAmount})}</div>}
-                        <form action={addToCartActionWithId}>
-                            <button className="py-3 px-4 text-white bg-pink-500 font-bold rounded hover:bg-pink-600 tracking-wide" type="submit">Book now</button>
-                        </form>
-                    </div>
-                </div>
+        <div className="shadow-xl bg-gradient-to-t from-[rgba(255,255,255,.9)] via-white to-white rounded-md flex flex-col gap-6">
+            <div className="w-full items-center relative h-36 md:h-72 bg-cover bg-center flex justify-center rounded-t-md"
+                style={{backgroundImage: `url(${hotel.imageUrl})`}}
+            >
             </div>
-            <div className="mt-4">{product.description}</div>
+
+            <div className="px-4 md:px-6 flex flex-col gap-2">
+                <div className="flex">
+                    {hotel.tags.city.map((city) => <>{city}</>)}
+                </div>
+                
+                <div className="text-3xl text-gray-700">
+                    {hotel.displayNames.en}
+                </div>
+                
+                <div className="md:w-2/3 w-full text-lg">
+                    {hotel.displayDescriptions.en}
+                </div>
+                
+                {rooms ? <div className="mt-8">
+                    <Tabs tabs={roomTabs(rooms)} />
+                </div> : null}
+                
+            </div>
+
+
         </div>
     )
 }

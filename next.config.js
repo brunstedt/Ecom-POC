@@ -6,6 +6,11 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'repository-images.githubusercontent.com',
                 pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'www.scandichotels.se',
+                pathname: '/**',
             }
         ]
     }

@@ -7,6 +7,12 @@ type ProductCardProps = {
     product: Product
 }
 
+/*
+
+    COMPONENT NOT USED
+
+*/
+
 export default function ProductCard({product}: ProductCardProps) {
     const hasDiscount = product.discountAmount > 0
 
@@ -19,7 +25,6 @@ export default function ProductCard({product}: ProductCardProps) {
                 <div className="py-4 px-6 w-full flex-grow justify-between flex flex-col rounded-b-md">
                     <div className="mb-4">
                         <div className="font-bold">{product.displayName}</div>
-                        <div>{product.displayDescription}</div>
                     </div>
 
                     <div className="flex flex-col">

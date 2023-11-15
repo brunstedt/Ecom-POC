@@ -37,7 +37,7 @@ export default function Header(props: HeaderProps) {
     return (
         <header>
             <div className="w-full max-w-5xl px-4 flex justify-between mx-auto z-10 relative py-8">
-                <nav className="flex gap-8">
+                <nav className="flex gap-6 md:gap-8 flex-nowrap overflow-x-auto">
                     {routes.map((route) => (
                         <Link href={route.path} key={route.path} className={twMerge('text-white text-xl tracking-wider', isActivePath(route.path) && 'border-b border-b-white')}>
                             {route.name}
@@ -49,7 +49,6 @@ export default function Header(props: HeaderProps) {
                     {isAuthenticated ? 
                         <div className="flex gap-6 items-start">
                             <MiniCart cart={props.cart} />
-                            {/* <button onClick={() => signOut()} className="text-white text-xl tracking-wider">Logout</button> */}
                         </div>
                         : <Link href="/login" className={twMerge('text-white text-xl tracking-wider', isActivePath('/login') && 'border-b border-b-white')}>Log in</Link>
                     }

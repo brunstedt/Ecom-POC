@@ -22,13 +22,13 @@ export default async function RootLayout({
     return (
         <html lang="en">
             <SessionProvider session={session}>
-                <body className={inter.className}>
-                    <div className="min-h-screen relative h-full flex flex-col">
+                <body className={`${inter.className}`}>
+                    <div className="min-h-screen relative h-full flex flex-col pb-24">
+                        <HeaderWrapper />
                         <video autoPlay loop muted playsInline className="w-full h-full max-h-screen object-cover fixed">
                             <source src="/hero.mp4" type="video/mp4" />
                         </video>
 
-                        <HeaderWrapper />
                         <main className="z-10 relative mx-auto max-w-5xl px-4 w-full max-h-screen h-full flex grow justify-center">
                             {children}
                         </main>

@@ -22,10 +22,10 @@ export default function MiniCart({cart}: MiniCartProps) {
         <>
             <button onClick={() => setIsOpen(true)} className="text-white flex items-center gap-3 text-xl tracking-wider border-white border rounded-full px-4 py-1 md:-mb-2 md:mt-0 -mt-1 hover:bg-white hover:bg-opacity-20">
                 <Icon name="shopping-cart" size='small' />
-                Cart
+                Cart {cart.cart.items.length > 0 ? <div className="text-sm bg-pink-500 w-6 font-bold flex items-center justify-center h-6 rounded-full">{cart.cart.items.length}</div> : null}
             </button>
 
-            <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)} title="My reserveation" backDrop>
+            <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)} title="My reservation" backDrop>
                 <div className="flex grow flex-col overflow-y-auto">
                     {cart.cart.items.length > 0 ? 
                         <div className="">{cart.cart.items.map(item => <MiniCartItem key={item.id} {...item} />)}</div> : 

@@ -23,3 +23,6 @@ export type Product = {
     totalPriceAmount: number,
     totalTaxAmount: number
 }
+
+
+

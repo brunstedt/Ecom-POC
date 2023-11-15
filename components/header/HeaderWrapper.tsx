@@ -1,5 +1,5 @@
 import Header from './Header'
-import { getCartAction } from '@/app/actions/cart'
+import { getCartAction } from '@/actions/cart'
 
 export default async function HeaderWrapper() {
     const cart = await getCartAction()
