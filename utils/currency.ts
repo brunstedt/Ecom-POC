@@ -5,6 +5,8 @@ export default function localeCurrency({
     amount: number
     decimals?: number
   }): string {
+    // Custom temporary formatting for Brink: Remove last two digits since that's decimals
+    amount = Math.floor(amount / 100)
     return new Intl.NumberFormat('sv-SE', {
         style: 'currency',
         currency: 'SEK',

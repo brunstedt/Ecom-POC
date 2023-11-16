@@ -27,8 +27,8 @@ export default async function RoomPicker(props: Room) {
     return (
         <div className="pb-8 px-2 flex gap-4 md:flex-row mt-4 flex-col-reverse">
             <div className="w-full md:w-1/2">
-                <div className="relative block h-40 w-full mb-2 md:w-10/12 overflow-hidden">
-                    <Image src={props.imageUrl} fill alt={props.name} className="object-contain" />
+                <div className="relative block h-56 md:h-80 w-full mb-2">
+                    <Image src={props.imageUrl} fill alt={props.name} objectFit='contain' />
                 </div>
                 {props.displayDescriptions.SE}
             </div>
@@ -40,9 +40,9 @@ export default async function RoomPicker(props: Room) {
                         {hasDiscount ? (
                             <>
                                 <div className="line-through text-sm">{localeCurrency({amount: currentPrice.basePriceAmount})}</div>
-                                <div className="font-bold text-xl text-red-600">{localeCurrency({amount: currentPrice.discountAmount})}</div>
+                                <div className="font-bold text-xl">{localeCurrency({amount: currentPrice.salePriceAmount})}</div>
                             </>
-                        ) : <div className="font-bold text-xl text-red-600">{localeCurrency({amount: currentPrice.salePriceAmount})}</div>}
+                        ) : <div className="font-bold text-xl ">{localeCurrency({amount: currentPrice.salePriceAmount})}</div>}
                     </div>
 
                     <form action={addToCartActionWithId}>
