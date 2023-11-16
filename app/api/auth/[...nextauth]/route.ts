@@ -40,7 +40,6 @@ export const authOptions: NextAuthOptions = {
                 const userSession = await res.json()
                 const cartSession = await createCartSession(userSession)
                 return {...userSession, cartToken: cartSession.token}
-                return await res.json()
             }
         })
     ],
