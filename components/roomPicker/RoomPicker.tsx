@@ -30,7 +30,7 @@ export default async function RoomPicker(props: Room) {
                 <div className="relative block h-40 w-full mb-2 md:w-10/12 overflow-hidden">
                     <Image src={props.imageUrl} fill alt={props.name} className="object-contain" />
                 </div>
-                {props.displayDescriptions.en}
+                {props.displayDescriptions.SE}
             </div>
             <div className="md:w-1/2 w-full flex flex-col gap-6">
 
@@ -54,12 +54,12 @@ export default async function RoomPicker(props: Room) {
                     <div className="flex gap-6">
                         {props.customAttributes.roomFor ? (
                             <div className="flex gap-2 items-center">
-                                <Icon name="user" size='small' /> <div>{props.customAttributes.roomFor} ({props.customAttributes.roomSize})</div>
+                                <Icon name="user" size='small' /> <div>Rum för {props.customAttributes.roomFor} ({props.customAttributes.roomSize})</div>
                             </div>) : null }
                     </div>
                     {props.customAttributes.salesArgument1 ? (
                         <div className="flex gap-2 items-center">
-                            <Icon name="check-circle" size='small' /> <div>{props.customAttributes.salesArgument1}</div>
+                            <Icon name="tv" size='small' /> <div>{props.customAttributes.salesArgument1}</div>
                         </div>) : null }
                     {props.customAttributes.salesArgument2 ? (
                         <div className="flex gap-2 items-center">

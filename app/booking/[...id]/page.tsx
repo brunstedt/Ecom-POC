@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import Tabs from '@/components/tabs/Tabs'
 import { Room } from '@/types/Hotel'
 import RoomPicker from '@/components/roomPicker/RoomPicker'
+import Icon from '@/components/icon/Icon'
 
 type PageProps = {
     params: { id: string }
@@ -24,7 +25,7 @@ export default async function Booking({params}: PageProps) {
     function roomTabs(rooms: Room[]) {
         return rooms.map((room) => ({
             id: room.id,
-            title: room.displayNames.en,
+            title: room.displayNames.SE,
             content: <RoomPicker {...room} />
         }))
     }
@@ -41,16 +42,16 @@ export default async function Booking({params}: PageProps) {
             </div>
 
             <div className="px-4 md:px-6 flex flex-col gap-2">
-                <div className="flex">
-                    {hotel.tags.city.map((city) => <>{city}</>)}
+                <div className="flex gap-1 items-center">
+                    <Icon name="pin" /> <div>{hotel.tags.city.map((city) => <>{city}</>)}</div>
                 </div>
                 
                 <div className="text-3xl text-gray-700">
-                    {hotel.displayNames.en}
+                    {hotel.displayNames.SE}
                 </div>
                 
                 <div className="md:w-2/3 w-full text-lg">
-                    {hotel.displayDescriptions.en}
+                    {hotel.displayDescriptions.SE}
                 </div>
                 
                 {rooms ? <div className="mt-8">

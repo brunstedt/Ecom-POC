@@ -20,11 +20,11 @@ export default function Header(props: HeaderProps) {
 
     const routes = [
         {
-            name: 'Home',
+            name: 'Hem',
             path: '/',
         },
         {
-            name: 'Booking',
+            name: 'Boka',
             path: '/booking',
         },
     ]
@@ -50,7 +50,7 @@ export default function Header(props: HeaderProps) {
                         <div className="flex gap-6 items-start">
                             <MiniCart cart={props.cart} />
                         </div>
-                        : <Link href="/login" className={twMerge('text-white text-xl tracking-wider', isActivePath('/login') && 'border-b border-b-white')}>Log in</Link>
+                        : <Link href="/login" className={twMerge('text-white text-xl tracking-wider', isActivePath('/login') && 'border-b border-b-white')}>Logga in</Link>
                     }
                 </div>
             </div> 
