@@ -43,10 +43,10 @@ export default async function Booking({params}: PageProps) {
 
             <div className="px-4 md:px-6 flex flex-col gap-2">
                 <div className="flex gap-1 items-center">
-                    <Icon name="pin" /> <div>{hotel.tags.city.map((city) => <>{city}</>)}</div>
+                    <Icon name="pin"  size='small'/> <div>{hotel.tags.city.map((city) => <>{city}</>)}</div>
                 </div>
                 
-                <div className="text-3xl text-gray-700">
+                <div className="text-3xl text-gray-700 font-display">
                     {hotel.displayNames.SE}
                 </div>
                 

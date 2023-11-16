@@ -53,7 +53,7 @@ export default function Drawer(props: DrawerProps) {
                                     <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
                                         <div
                                             className={twJoin(
-                                                'border-base-90 flex w-full items-center border-b px-4 py-2 md:px-6 md:py-4',
+                                                'border-base-90 flex w-full items-center border-b px-4 py-2 md:px-6 md:py-4 font-display',
                                                 props.title ? 'justify-between' : 'justify-end',
                                             )}
                                         >

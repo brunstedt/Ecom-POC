@@ -25,7 +25,7 @@ export default async function RoomPicker(props: Room) {
     const hasDiscount = currentPrice.discountAmount > 0
 
     return (
-        <div className="pb-8 px-2 flex gap-4 md:gap-0 md:flex-row mt-4 flex-col-reverse">
+        <div className="pb-8 px-2 flex gap-4 md:flex-row mt-4 flex-col-reverse">
             <div className="w-full md:w-1/2">
                 <div className="relative block h-40 w-full mb-2 md:w-10/12 overflow-hidden">
                     <Image src={props.imageUrl} fill alt={props.name} className="object-contain" />

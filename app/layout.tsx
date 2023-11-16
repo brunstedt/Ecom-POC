@@ -1,12 +1,23 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import HeaderWrapper from '@/components/header/HeaderWrapper'
 import SessionProvider from './SessionProvider'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { Rufina, Open_Sans } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+export const rufina = Rufina({ 
+    subsets: ['latin'], 
+    display: 'swap', 
+    weight: ['400', '700'],
+    variable: '--display-font',
+})
+
+const openSans = Open_Sans({
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--body-font'
+})
 
 export const metadata: Metadata = {
     title: 'Top of minds GO BOS',
@@ -22,7 +33,7 @@ export default async function RootLayout({
     return (
         <html lang="en">
             <SessionProvider session={session}>
-                <body className={`${inter.className}`}>
+                <body className={`${openSans.className} ${rufina.variable}`}>
                     <div className="min-h-screen relative h-full flex flex-col pb-24">
                         <HeaderWrapper />
                         <video autoPlay loop muted playsInline className="w-full h-full max-h-screen object-cover fixed">
