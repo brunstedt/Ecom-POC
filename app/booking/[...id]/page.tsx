@@ -6,7 +6,6 @@ import Tabs from '@/components/tabs/Tabs'
 import { Room } from '@/types/Hotel'
 import RoomPicker from '@/components/roomPicker/RoomPicker'
 import Icon from '@/components/icon/Icon'
-import Link from 'next/link'
 
 type PageProps = {
     params: { id: string }
@@ -44,13 +43,7 @@ export default async function Booking({params}: PageProps) {
 
             <div className="px-4 md:px-6 flex flex-col gap-2">
                 <div className="flex gap-1 items-center">
-                {hotel.tags.city.map((city) => 
-                <>
-                    <Icon name="pin"  size='small'/> <Link href={`https://google.com/maps/place/${city}`} target="_blank">{city}</Link> 
-                </>
-                )
-                }
-                    
+                    <Icon name="pin"  size='small'/> <div>{hotel.tags.city.map((city) => <>{city}</>)}</div>
                 </div>
                 
                 <div className="text-3xl text-gray-700 font-display">
