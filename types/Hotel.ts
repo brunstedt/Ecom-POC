@@ -22,7 +22,7 @@ export type Hotel = {
     }
 }
 
-export type Item = {
+export type Room = {
     id: string,
     productParentId: string,
     taxGroupId: string,
@@ -51,9 +51,9 @@ export type Item = {
     weight: number
 }
 
-export type Items = Item[]
+export type Rooms = Room[]
 
-export type ItemPrice = {
+export type RoomPrice = {
     productVariantId: string,
     productParentId: string,
     basePriceAmount: number,
@@ -67,4 +67,4 @@ export type ItemPrice = {
     updated: string
 }
 
-export type ItemPrices = ItemPrice[]
+export type RoomPrices = RoomPrice[]
