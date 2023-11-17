@@ -49,6 +49,7 @@ export default function MiniCart({cart}: MiniCartProps) {
                             'py-3 px-4 text-center text-white bg-pink-500 font-bold rounded hover:bg-pink-600 tracking-wide', 
                             cart.cart.items.length <= 0 && 'bg-gray-300 pointer-events-none')
                     } 
+                    onClick={() => setIsOpen(false)}
                     href="/checkout">Bekräfta bokning</Link>
                 </div>
             </Drawer>

@@ -1,8 +1,9 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import {cartHeaders} from './helpers'
+import { CartItem } from '@/types/cart'
 
-export async function getCheckout(): Promise<Any  | undefined> {
+export async function getCheckout(): Promise<CartItem[]  | undefined> {
 
     const session = await getServerSession(authOptions)
     if(!session) { return }
