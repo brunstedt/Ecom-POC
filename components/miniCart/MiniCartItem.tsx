@@ -11,8 +11,9 @@ export default function MiniCartItem(props: CartItem) {
     return(
         <div className="flex px-6 py-3 first:mt-3 border-b gap-4 justify-between items-center">
             <div className='flex gap-4'>
-                <Image src={props.imageUrl} alt={props.displayName} width={90} height={60} />
-
+                <div className="flex-[0_0_33%] relative aspect-[9/13] inline-flex justify-center items-center">
+                    <Image className='object-center object-contain max-w-full max-h-full' src={props.imageUrl} alt={props.displayName} width={900} height={1300} />
+                </div>
                 <div className="flex flex-col gap-2">
                     <div className="font-semibold text-sm">{props.quantity} x {props.displayName}</div>
                     <div className="flex flex-col">
