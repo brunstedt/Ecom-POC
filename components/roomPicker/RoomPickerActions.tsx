@@ -37,19 +37,16 @@ export default function RoomPickerActions(props: Props) {
                 quantity: 1,
                 productVariantId: props.item.id,
             }),
-            ...(additions.length > 0 && props.additions
-                ? additions.map((additionId) => {
-                    const id =
-              props.additions?.find(
-                  (add) => add.beverage.productParentId === additionId
-              )?.beverage.id || ''
-                    return addToCartAction({
-                        productId: id,
+            props.additions
+                ?.filter((addition) => additions.includes(addition.beverage.id))
+                .map((filteredAddition) =>
+                    addToCartAction({
+                        productId: filteredAddition.beverage.id,
                         quantity: 1,
-                        productVariantId: id,
+                        productVariantId: filteredAddition.beverage.id,
                     })
-                })
-                : []),
+                )
+               
         ])
     }
 
