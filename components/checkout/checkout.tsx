@@ -9,7 +9,7 @@ type ProductCardProps = {
 }
 
 export default function CheckoutItem(props: CartItem) {
-    console.log(props.name);
+
     const hasDiscount = props.discountAmount > 0
 
     return (

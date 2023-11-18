@@ -4,12 +4,18 @@ import type { Item, ItemPrice, ItemPrices } from '@/types/Hotel'
 import localeCurrency from '@/utils/currency'
 import React, { useState } from 'react'
 import BookRoomButton from './BookRoomButton'
+import { Cart } from '@/types/cart'
 
 type Props = {
   currentPrice: ItemPrice;
   item: Item;
   additions?: { beverage: Item; prices?: ItemPrices }[];
 };
+
+const isCart = (
+    response: { cart: Cart } | string | undefined
+): response is { cart: Cart } =>
+    typeof response === 'object' && Object.hasOwn(response, 'cart')
 
 export default function RoomPickerActions(props: Props) {
     // STATE
@@ -31,12 +37,17 @@ export default function RoomPickerActions(props: Props) {
     }
 
     const addToCartActionWithId = async () => {
+        const response = await addToCartAction({
+            productId: props.item.productParentId,
+            quantity: 1,
+            productVariantId: props.item.id,
+        })
+
+        if (!isCart(response)) {
+            return
+        }
+
         await Promise.all([
-            addToCartAction({
-                productId: props.item.productParentId,
-                quantity: 1,
-                productVariantId: props.item.id,
-            }),
             props.additions
                 ?.filter((addition) => additions.includes(addition.beverage.id))
                 .map((filteredAddition) =>
@@ -44,9 +55,11 @@ export default function RoomPickerActions(props: Props) {
                         productId: filteredAddition.beverage.id,
                         quantity: 1,
                         productVariantId: filteredAddition.beverage.id,
+                        options: {
+                            RelatesTo: response.cart.items[response.cart.items.length - 1].id,
+                        },
                     })
-                )
-               
+                ),
         ])
     }
 
@@ -80,18 +93,12 @@ export default function RoomPickerActions(props: Props) {
                                     <input
                                         className="opacity-0 cursor-pointer"
                                         type="checkbox"
-                                        onChange={() =>
-                                            addOrRemoveAddition(addition.beverage.productParentId)
-                                        }
-                                        checked={additions.includes(
-                                            addition.beverage.productParentId
-                                        )}
+                                        onChange={() => addOrRemoveAddition(addition.beverage.id)}
+                                        checked={additions.includes(addition.beverage.id)}
                                     />
                                     <span
                                         className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[5px] h-[12px] border-b-[2px] border-r-[2px] border-solid border-black rotate-45 pointer-events-none ${
-                                            !additions.includes(addition.beverage.productParentId)
-                                                ? 'hidden'
-                                                : ''
+                                            !additions.includes(addition.beverage.id) ? 'hidden' : ''
                                         }`}
                                     ></span>
                                 </div>
