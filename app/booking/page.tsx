@@ -21,6 +21,7 @@ export default function Booking() {
                     </Link>
                     <Icon name="tv" size="medium" />
                     <Icon name="phone"/>
+                    <Icon name="hairdryer"/>
                 </>
             </div>
         </div>
