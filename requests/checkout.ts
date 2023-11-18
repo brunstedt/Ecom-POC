@@ -1,9 +1,10 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import {cartHeaders, checkoutHeaders} from './helpers'
-import { Cart } from '@/types/cart'
+import { Cart, CartSessionsResponse } from '@/types/cart'
+import { CheckoutSessionResponse } from '@/types/checkout'
 
-export async function getCheckout(checkoutToken?: string): Promise<any  | undefined> {
+export async function getCheckout(checkoutToken?: string): Promise<CheckoutSessionResponse  | undefined> {
 
     if(!checkoutToken) { return }
 
@@ -15,7 +16,7 @@ export async function getCheckout(checkoutToken?: string): Promise<any  | undefi
 
     const cart = await response.json()
 
-    return cart.checkout
+    return cart
 }
 
 export async function createCheckoutSession(): Promise<string | undefined> {
@@ -29,8 +30,8 @@ export async function createCheckoutSession(): Promise<string | undefined> {
             shippingProvider: {
                 name: 'Ingrid',
                 id: 'brink_ingrid_test'
-              },
-              paymentProvider: {
+            },
+            paymentProvider: {
                 name: 'KlarnaCheckout',
                 id: '39494421-a9b3-47a1-b1f7-a66fce93c840'              
             }
@@ -49,19 +50,19 @@ export async function createIngridWidget(checkoutToken?: string): Promise<any | 
         method: 'POST',
         headers: {...checkoutHeaders(checkoutToken)},
         body: JSON.stringify({
-            "ingrid": {
-              "locales": [
-                "sv-SE"
-              ],
-              "postalCode": "16935",
-              "search_address": {
-                "address_lines": [
-                  "Idrottsgatan"
+            'ingrid': {
+                'locales': [
+                    'sv-SE'
                 ],
-                "postal_code": "16935"
-              }
+                'postalCode': '16935',
+                'search_address': {
+                    'address_lines': [
+                        'Idrottsgatan'
+                    ],
+                    'postal_code': '16935'
+                }
             }
-          })
+        })
     })
 
     const ingrid = await response.json()
