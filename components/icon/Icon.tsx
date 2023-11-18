@@ -27,7 +27,8 @@ export const icons = [
     'x-mark',
     'trash',
     'pin',
-    'tv'
+    'tv',
+    'house'
 ] as const
 
 export type Icons = (typeof icons)[number]
