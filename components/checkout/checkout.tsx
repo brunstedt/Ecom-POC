@@ -1,38 +1,73 @@
 import { CartItem } from '@/types/cart'
-import type { Product } from '@/types/product'
 import localeCurrency from '@/utils/currency'
 import Image from 'next/image'
-import Link from 'next/link'
+import {
+    CheckoutItem,
+    type CheckoutItem as CheckoutItemType,
+} from '@/types/checkout'
 
-type ProductCardProps = {
-    product: Product
-}
+type CheckoutItemProps = {
+  item: CheckoutItemType;
+  additions?: CheckoutItemType[];
+};
 
-export default function CheckoutItem(props: CartItem) {
-
-    const hasDiscount = props.discountAmount > 0
+export default function CheckoutItem(props: CheckoutItemProps) {
+    const hasDiscount = props.item.discountAmount > 0
+    const additionalPrice =
+    props.additions?.reduce(
+        (prev, curr) => (prev += curr.basePriceAmount),
+        0
+    ) || 0
 
     return (
-        <div className="flex flex-col shadow-xl hover:shadow-2xl duration-300 w-full bg-gradient-to-t from-[rgba(255,255,255,.75)] via-white to-white rounded-md md:hover:scale-105 transition-all duration-400">
-            <Link href={`/booking/${props.id}`} className="grow flex flex-col">
-                <div className="relative block h-40 w-full overflow-hidden">
-                    <Image src={props.imageUrl} fill alt={props.displayName} className="mx-auto object-contain bg-white rounded-t-md" />
+        <div className="flex flex-col w-full bg-white border-b border-gray-300 last:border-0 py-2">
+            <div className="grow flex gap-4">
+                <div className="relative h-46 w-56">
+                    <Image
+                        src={props.item.imageUrl}
+                        fill
+                        alt={props.item.displayName}
+                        className="object-contain"
+                    />
                 </div>
-                <div className="py-4 px-6 w-full flex-grow justify-between flex flex-col rounded-b-md">
+                <div className="w-full flex-grow justify-between flex flex-col rounded-b-md">
                     <div className="mb-4">
-                        <div className="font-bold">{props.displayName}</div>
+                        <div className="font-bold">{props.item.displayName}</div>
+                        <div className="text-sm">{props.item.displayDescription}</div>
                     </div>
 
                     <div className="flex flex-col">
                         {hasDiscount ? (
                             <>
-                                <div className="line-through text-sm">{localeCurrency({amount: props.basePriceAmount})}</div>
-                                <div className="font-bold text-xl text-red-600">{localeCurrency({amount: props.salePriceAmount})}</div>
+                                {props.additions &&
+                  props.additions.length > 0 &&
+                  props.additions.map((item, index) => (
+                      <div
+                          key={`addition-${index}`}
+                          className="text-sm font-bold text-pink-500"
+                      >{`+ ${item.quantity} x ${item.displayName}`}</div>
+                  ))}
+                                <div className="line-through text-gray-400 text-sm">
+                                    {localeCurrency({
+                                        amount: props.item.basePriceAmount + additionalPrice,
+                                    })}
+                                </div>
+                                <div className="font-bold">
+                                    {localeCurrency({
+                                        amount: props.item.salePriceAmount + additionalPrice,
+                                    })}
+                                </div>
                             </>
-                        ) : <div className="font-bold text-xl text-red-600">{localeCurrency({amount: props.salePriceAmount})}</div>}
+                        ) : (
+                            <div className="font-bold ">
+                                {localeCurrency({
+                                    amount: props.item.salePriceAmount + additionalPrice,
+                                })}
+                            </div>
+                        )}
                     </div>
                 </div>
-            </Link>
+            </div>
         </div>
     )
 }

@@ -56,8 +56,8 @@ export default function MiniCartItem(props: Props) {
             props.additions.map((item, index) => (
                 <div
                     key={`addition-${index}`}
-                    className="text-sm"
-                >{`+ ${item.quantity}x ${item.displayName}`}</div>
+                    className="text-sm text-pink-500"
+                >{`+ ${item.quantity} x ${item.displayName}`}</div>
             ))}
                     <div className="flex flex-col">
                         {hasDiscount ? (
