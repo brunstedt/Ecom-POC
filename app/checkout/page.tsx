@@ -1,16 +1,18 @@
 import CheckoutItem from '@/components/checkout/checkout';
-import {createCheckoutSession, getCheckout} from '@/requests/checkout';
+import {createCheckoutSession, createIngridWidget, getCheckout} from '@/requests/checkout';
 import { CartItem } from '@/types/cart';
 
 export default async function Checkout() {
     const checkoutSession = await createCheckoutSession()
-const checkoutData = await getCheckout();
+    const checkoutData = await getCheckout(checkoutSession);
+    const ingridMarkup = await createIngridWidget(checkoutSession);7
 
     return (
         <div>
-            {checkoutSession?.items.map((item: CartItem)=> <CheckoutItem key={item.id} {...item}/>)}
-            <div>SHIPPING {checkoutSession?.capabilities?.shippingProvider.name ?? 'No Shipping'} </div>
-            <div>PAYMENTS {checkoutSession?.capabilities?.paymentProvider.name ?? 'No Payment'} </div>
+            {checkoutData?.items.map((item: CartItem)=> <CheckoutItem key={item.id} {...item}/>)}
+            <div>SHIPPING {checkoutData?.capabilities?.shippingProvider.name ?? 'No Shipping'} </div>
+            <div dangerouslySetInnerHTML={ingridMarkup}></div>
+            <div>PAYMENTS {checkoutData?.capabilities?.paymentProvider.name ?? 'No Payment'} </div>
         </div>
     )
 }

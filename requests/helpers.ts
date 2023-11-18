@@ -27,3 +27,13 @@ export function productHeaders(session: Session): BrinkHeaders & HeadersInit | u
         'Content-Type': 'application/json',
     })
 }
+
+export function checkoutHeaders(checkoutToken: string): BrinkHeaders & HeadersInit | undefined {
+    // @ts-ignore The token_type and access_token are not defined in the Session type
+    const authorization = `Bearer ${checkoutToken}`
+    return ({
+        'x-api-key': `${process.env.BRINK_API_KEY}`,
+        'Authorization': authorization,
+        'Content-Type': 'application/json',
+    })
+}
