@@ -11,6 +11,7 @@ export default function Booking() {
                         Landsort
                     </Link>
                     <Icon name="tv" size="medium" />
+                    <Icon name='wifi'/>
                 </>
             </div>
             <div className="text-3xl mt-4 flex items-center justify-center text-white gap-2">
@@ -19,7 +20,8 @@ export default function Booking() {
                         Downtown Camper
                     </Link>
                     <Icon name="tv" size="medium" />
-                    <Icon name="house" size="medium" />
+                    <Icon name="phone"/>
+                    <Icon name="hairdryer"/>
                 </>
             </div>
         </div>

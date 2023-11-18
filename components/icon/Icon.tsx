@@ -28,7 +28,8 @@ export const icons = [
     'trash',
     'pin',
     'tv',
-    'house'
+    'house',
+    'hairdryer'
 ] as const
 
 export type Icons = (typeof icons)[number]
