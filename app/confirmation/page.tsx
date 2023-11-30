@@ -1,4 +1,4 @@
-import KlarnaPayment from '@/components/checkout/payment'
+import Widget from '@/components/checkout/widget'
 import { getKlarnaOrders } from '@/requests/checkout'
 
 type PageProps = {
@@ -14,8 +14,7 @@ export default async function Confirmation({searchParams}: PageProps) {
         <div className="flex flex-col gap-4 w-full">
             <div className="w-full flex flex-col gap-1 bg-white p-4 rounded-md">
                 <h2 className="text-xl">Orderbekräftelse</h2>
-                <p>{order}</p>
-                <KlarnaPayment checkoutSession={order} klarnaMarkup={response?.html_snippet}/>
+                <Widget elementId='klarna-checkout-container' HTMLmarkup={response?.html_snippet}/>
             </div>
         </div>
     )

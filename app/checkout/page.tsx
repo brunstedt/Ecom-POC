@@ -1,6 +1,5 @@
 import CheckoutItem from '@/components/checkout/checkout'
-import IngridDelivery from '@/components/checkout/delivery'
-import KlarnaPayment from '@/components/checkout/payment'
+import Widget from '@/components/checkout/widget'
 import {
     createCheckoutSession,
     createIngridWidget,
@@ -16,15 +15,13 @@ export default async function Checkout() {
         redirect('/login?redirect=/booking')
     }
 
-    const checkoutData = await getCheckout(checkoutSession)
-
-    if (!checkoutData) {return null}
-
-    const [ingridMarkup, klarnaMarkup] = await Promise.all([
+    const [checkoutData, ingridMarkup, klarnaMarkup] = await Promise.all([
+        getCheckout(checkoutSession),
         createIngridWidget(checkoutSession, '11240'),
         createKlarnaOrder(checkoutSession)
     ])
 
+    if (!checkoutData) {return null}
 
     const regularItems = checkoutData.checkout.items.filter(
         (item) => !item.options.RelatesTo
@@ -52,13 +49,11 @@ export default async function Checkout() {
             </div>
             <div className="w-full flex flex-col gap-1 bg-white p-4 rounded-md">
                 <h2 className="text-xl">Leverans</h2>
-                {checkoutData?.checkout.capabilities?.shippingProvider.name ?? 'No Shipping'}
-                <IngridDelivery checkoutSession={checkoutSession} markup={ingridMarkup}/>
+                <Widget HTMLmarkup={ingridMarkup} elementId='shipwallet-container'  />            
             </div>
             <div className="w-full flex flex-col gap-1 bg-white p-4 rounded-md">
                 <h2 className="text-xl">Betalning</h2>
-                {checkoutData?.checkout.capabilities?.paymentProvider.name ?? 'No Payment'}
-                <KlarnaPayment checkoutSession={checkoutSession} klarnaMarkup={klarnaMarkup}/>
+                <Widget  HTMLmarkup={klarnaMarkup} elementId='klarna-checkout-container'/>
             </div>
         </div>
     )
