@@ -25,6 +25,7 @@ export default async function Checkout() {
         createKlarnaOrder(checkoutSession)
     ])
 
+
     const regularItems = checkoutData.checkout.items.filter(
         (item) => !item.options.RelatesTo
     )

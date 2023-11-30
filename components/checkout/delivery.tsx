@@ -22,6 +22,7 @@ export default function IngridDelivery({
         const existingSessionID = window.localStorage.getItem(
             localStorageSessionIDKey
         )
+        
         if (existingSessionID) {
             try {
                 const getSessionResponse: { htmlSnippet: string; id: string } =

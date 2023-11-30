@@ -86,18 +86,18 @@ export async function createKlarnaOrder(checkoutToken?: string) {
         method: 'POST',
         headers: {...checkoutHeaders(checkoutToken)},
         body: JSON.stringify({
-            'klarna': {
-                'merchant_urls': {
-                    'terms': 'https://merchant.com/terms',
-                    'confirmation': 'https://example.com/confirmation',
-                    'cancellation_terms': 'https://merchant.com/terms',
-                    'checkout': 'https://merchant.com/checkout'
+            klarna: {
+                merchant_urls: {
+                    terms: 'https://merchant.com/terms',
+                    cancellation_terms: 'https://merchant.com/terms',
+                    checkout: `${process.env.BASE_URL}/checkout`,
+                    confirmation:  `${process.env.BASE_URL}/confirmation?order=${checkoutToken}`,
                 },
-                'options': {
-                    'additional_checkbox': {
-                        'text': 'Subscribe to newsletter',
-                        'checked': false,
-                        'required': false
+                options: {
+                    additional_checkbox: {
+                        text: 'Subscribe to newsletter',
+                        checked: false,
+                        required: false
                     }
                 }
             }
