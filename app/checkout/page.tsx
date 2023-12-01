@@ -9,7 +9,8 @@ import {
 import { redirect } from 'next/navigation'
 
 export default async function Checkout() {
-    const checkoutSession = await createCheckoutSession()
+    const showShipping = process.env.ENABLE_SHIPPING === '1'
+    const checkoutSession = await createCheckoutSession(showShipping)
 
     if (!checkoutSession) {
         redirect('/login?redirect=/booking')
@@ -18,10 +19,12 @@ export default async function Checkout() {
     const [checkoutData, ingridMarkup, klarnaMarkup] = await Promise.all([
         getCheckout(checkoutSession),
         createIngridWidget(checkoutSession, '11240'),
-        createKlarnaOrder(checkoutSession)
+        createKlarnaOrder(checkoutSession),
     ])
 
-    if (!checkoutData) {return null}
+    if (!checkoutData) {
+        return null
+    }
 
     const regularItems = checkoutData.checkout.items.filter(
         (item) => !item.options.RelatesTo
@@ -47,13 +50,18 @@ export default async function Checkout() {
                     />
                 ))}
             </div>
-            <div className="w-full flex flex-col gap-1 bg-white p-4 rounded-md">
-                <h2 className="text-xl">Leverans</h2>
-                <Widget HTMLmarkup={ingridMarkup} elementId='shipwallet-container'  />            
-            </div>
+            {showShipping && (
+                <div className="w-full flex flex-col gap-1 bg-white p-4 rounded-md">
+                    <h2 className="text-xl">Leverans</h2>
+                    <Widget HTMLmarkup={ingridMarkup} elementId="shipwallet-container" />
+                </div>
+            )}
             <div className="w-full flex flex-col gap-1 bg-white p-4 rounded-md">
                 <h2 className="text-xl">Betalning</h2>
-                <Widget  HTMLmarkup={klarnaMarkup} elementId='klarna-checkout-container'/>
+                <Widget
+                    HTMLmarkup={klarnaMarkup}
+                    elementId="klarna-checkout-container"
+                />
             </div>
         </div>
     )

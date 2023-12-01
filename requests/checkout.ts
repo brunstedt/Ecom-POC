@@ -18,23 +18,30 @@ export async function getCheckout(checkoutToken?: string): Promise<CheckoutSessi
     return cart
 }
 
-export async function createCheckoutSession(): Promise<string | undefined> {
+export async function createCheckoutSession(enableShipping: boolean = false): Promise<string | undefined> {
     const session = await getServerSession(authOptions)
     if(!session) { return }
+
+    const body = enableShipping ? {
+        shippingProvider: {
+            name: 'Ingrid',
+            id: 'brink_ingrid_test'
+        },
+        paymentProvider: {
+            name: 'KlarnaCheckout',
+            id: '39494421-a9b3-47a1-b1f7-a66fce93c840'              
+        }
+    } : {
+        paymentProvider: {
+            name: 'KlarnaCheckout',
+            id: '39494421-a9b3-47a1-b1f7-a66fce93c840'              
+        }
+    }
 
     const response = await fetch(`${process.env.BRINK_SHOPPER_URL}/shopper/sessions/checkout/start`, {
         method: 'POST',
         headers: {...cartHeaders(session)},
-        body: JSON.stringify({
-            shippingProvider: {
-                name: 'Ingrid',
-                id: 'brink_ingrid_test'
-            },
-            paymentProvider: {
-                name: 'KlarnaCheckout',
-                id: '39494421-a9b3-47a1-b1f7-a66fce93c840'              
-            }
-        })
+        body: JSON.stringify(body)
     })
 
     const cart = await response.json()
